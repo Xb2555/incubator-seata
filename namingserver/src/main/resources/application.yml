@@ -17,8 +17,13 @@
 
 server:
   port: 8081
-
 spring:
+  ai:
+    mcp:
+      server:
+        streamable-http:
+          mcp-endpoint: /mcp
+        protocol: streamable
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -31,6 +36,10 @@ logging:
 heartbeat:
   threshold: 90000
   period: 60000
+console:
+  user:
+    password: seata
+    username: seata
 seata:
   security:
     secretKey: SeataSecretKey0c382ef121d778043159209298fd40bf3850a017
@@ -38,3 +47,38 @@ seata:
     csrf-ignore-urls: /naming/v1/**,/api/v1/naming/**
     ignore:
       urls: /,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.jpeg,/**/*.ico,/api/v1/auth/login,/version.json,/naming/v1/health,/error
+
+    # MCP Server Configuration
+  mcp:
+    # Query limits the maximum time interval, The unit is milliseconds, Default seven days
+    query:
+      max_query_duration: 604800000
+    # Whether to enable permission authentication
+    auth:
+      enabled: true
+
+  # Business data source configuration
+  businessDataSources:
+    dataSource1:
+      # Whether this data source is enabled
+      enabled: true
+      dbType: mysql
+      driverClassName: com.mysql.cj.jdbc.Driver # Currently, only mysql is supported
+      url:
+      username: root
+      password: root
+      datasource: druid # Optional connection pool type (druid/hikari/dbcp)
+      minConn: 5
+      maxConn: 50
+      maxWait: 5000
+    dataSource2:
+      enabled: true
+      dbType: mysql
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url:
+      username: root
+      password: root
+      datasource: dbcp
+      minConn: 5
+      maxConn: 50
+      maxWait: 5000
