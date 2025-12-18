@@ -16,7 +16,6 @@
  */
 package org.apache.seata.namingserver.filter;
 
-import jakarta.servlet.AsyncContext;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -44,9 +43,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import static org.apache.seata.common.Constants.RAFT_GROUP_HEADER;
@@ -120,43 +117,26 @@ public class ConsoleRemotingFilter implements Filter {
                                 response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
                                 return;
                             }
-
-                            // Forward the request
-                            AsyncContext asyncContext = servletRequest.startAsync();
-                            asyncContext.setTimeout(5000L);
-                            Thread.startVirtualThread(() -> {
-                                try {
-                                    CompletableFuture<ResponseEntity<byte[]>> future = CompletableFuture.supplyAsync(
-                                                    () -> restTemplate.exchange(
-                                                            URI.create(targetUrl),
-                                                            httpMethod,
-                                                            httpEntity,
-                                                            byte[].class))
-                                            // Set a shorter time than 5000L to prevent contention between servlet
-                                            // containers and virtual threads after the request times out
-                                            .orTimeout(4500, TimeUnit.MILLISECONDS);
-                                    ResponseEntity<byte[]> responseEntity = future.get();
-                                    responseEntity.getHeaders().forEach((key, value) -> {
-                                        value.forEach(v -> response.addHeader(key, v));
-                                    });
-                                    response.setStatus(
-                                            responseEntity.getStatusCode().value());
-                                    Optional.ofNullable(responseEntity.getBody())
-                                            .ifPresent(body -> {
-                                                try (ServletOutputStream outputStream = response.getOutputStream()) {
-                                                    outputStream.write(body);
-                                                    outputStream.flush();
-                                                } catch (IOException e) {
-                                                    logger.error(e.getMessage(), e);
-                                                }
-                                            });
-                                } catch (Exception ex) {
-                                    logger.error(ex.getMessage(), ex);
-                                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                                } finally {
-                                    asyncContext.complete();
-                                }
-                            });
+                            try {
+                                ResponseEntity<byte[]> responseEntity = restTemplate.exchange(
+                                        URI.create(targetUrl), httpMethod, httpEntity, byte[].class);
+                                responseEntity.getHeaders().forEach((key, value) -> {
+                                    value.forEach(v -> response.addHeader(key, v));
+                                });
+                                response.setStatus(
+                                        responseEntity.getStatusCode().value());
+                                Optional.ofNullable(responseEntity.getBody()).ifPresent(body -> {
+                                    try (ServletOutputStream outputStream = response.getOutputStream()) {
+                                        outputStream.write(body);
+                                        outputStream.flush();
+                                    } catch (IOException e) {
+                                        logger.error(e.getMessage(), e);
+                                    }
+                                });
+                            } catch (Exception ex) {
+                                logger.error(ex.getMessage(), ex);
+                                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                            }
                             return;
                         }
                     }
