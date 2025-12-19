@@ -32,8 +32,7 @@ public class GlobalSessionParamDto implements Serializable {
     @ToolParam(description = "applicationId", required = false)
     private String applicationId;
 
-    @ToolParam(
-            description = "the state enumeration class is in example", required = false)
+    @ToolParam(description = "the state enumeration class is in example", required = false)
     private Integer status;
 
     @ToolParam(description = "The name of the transaction", required = false)

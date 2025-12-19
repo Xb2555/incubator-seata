@@ -47,10 +47,14 @@ public class GlobalLockParamDto implements Serializable {
     @ToolParam(description = "Page size")
     private int pageSize;
 
-    @ToolParam(description = "Start time, The global lock create time is after this time (yyyy-MM-dd HH:mm:ss)", required = false)
+    @ToolParam(
+            description = "Start time, The global lock create time is after this time (yyyy-MM-dd HH:mm:ss)",
+            required = false)
     private String timeStart;
 
-    @ToolParam(description = "End time, The global lock create time is before this time (yyyy-MM-dd HH:mm:ss)", required = false)
+    @ToolParam(
+            description = "End time, The global lock create time is before this time (yyyy-MM-dd HH:mm:ss)",
+            required = false)
     private String timeEnd;
 
     public int getPageNum() {

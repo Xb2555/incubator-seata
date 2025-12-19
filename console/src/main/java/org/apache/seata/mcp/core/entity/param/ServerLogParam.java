@@ -33,20 +33,26 @@ public class ServerLogParam implements Serializable {
             required = true)
     private Integer page = 1;
 
-    @McpToolParam(description = "The start time when the log information was generated(yyyy-MM-dd HH:mm:ss)", required = false)
+    @McpToolParam(
+            description = "The start time when the log information was generated(yyyy-MM-dd HH:mm:ss)",
+            required = false)
     private String logMessageStartTime;
 
-    @McpToolParam(description = "The end time when the log information was generated(yyyy-MM-dd HH:mm:ss)", required = false)
+    @McpToolParam(
+            description = "The end time when the log information was generated(yyyy-MM-dd HH:mm:ss)",
+            required = false)
     private String logMessageEndTime;
 
     @McpToolParam(
             description =
-                    "Log level filtering, optional values: error, warn, info. When there is a conflict with the logType parameter, the logType shall prevail", required = false)
+                    "Log level filtering, optional values: error, warn, info. When there is a conflict with the logType parameter, the logType shall prevail",
+            required = false)
     private String logMessageLevel;
 
     @McpToolParam(
             description =
-                    "This is a Array of String type, without key-value format!! Log content keyword fuzzy matching, support multiple keywords separated by commas, All keyword matches will return the log line information", required = false)
+                    "This is a Array of String type, without key-value format!! Log content keyword fuzzy matching, support multiple keywords separated by commas, All keyword matches will return the log line information",
+            required = false)
     private String[] logMessageKeyWord;
 
     private Long curSize;

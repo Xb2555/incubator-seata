@@ -40,11 +40,11 @@ public class ServerLogTools {
                             + "- All logs from all pages should be combined into a single list in chronological order. You don’t need to handle pagination logic yourself—just merge the results.\n")
     public ServerLogPageVO<String> getServerLogFile(
             @McpToolParam(description = "Specify the namespace of the TC node", required = true)
-            NameSpaceDetail nameSpaceDetail,
+                    NameSpaceDetail nameSpaceDetail,
             @McpToolParam(
                             description = "server log file query parameters(If possible, avoid using full queries)",
                             required = true)
-            ServerLogParam param) {
+                    ServerLogParam param) {
         return logService.analyseServerLogFile(nameSpaceDetail, param);
     }
 }

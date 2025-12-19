@@ -108,7 +108,8 @@ public class WebSecurityConfig {
         for (String endpoint : mcpEndpoints) {
             ignoreURLs.append(",").append(endpoint);
         }
-        RequestMatcher[] ignoredMatchers = buildAntMatchers(ignoreURLs.toString().trim());
+        RequestMatcher[] ignoredMatchers =
+                buildAntMatchers(ignoreURLs.toString().trim());
         return web -> {
             if (ignoredMatchers.length > 0) {
                 web.ignoring().requestMatchers(ignoredMatchers);
@@ -124,7 +125,8 @@ public class WebSecurityConfig {
         for (String endpoint : mcpEndpoints) {
             csrfIgnoreUrls.append(",").append(endpoint);
         }
-        RequestMatcher[] csrfIgnored = buildAntMatchers(csrfIgnoreUrls.toString().trim());
+        RequestMatcher[] csrfIgnored =
+                buildAntMatchers(csrfIgnoreUrls.toString().trim());
         http.authenticationManager(authenticationManager)
                 .authorizeHttpRequests(authz -> authz.anyRequest().authenticated())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))

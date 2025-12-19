@@ -19,13 +19,17 @@ package org.apache.seata.mcp.core.entity.param;
 import org.springaicommunity.mcp.annotation.McpToolParam;
 
 public class GlobalAbnormalSessionParam {
-    @McpToolParam(description = "Whether or not it contains branch transaction information, default is true", required = false)
+    @McpToolParam(
+            description = "Whether or not it contains branch transaction information, default is true",
+            required = false)
     private boolean withBranch = true;
 
     @McpToolParam(description = "The transaction start time is after this time (yyyy-MM-dd HH:mm:ss)", required = false)
     private String timeStart;
 
-    @McpToolParam(description = "The transaction start time is before this time (yyyy-MM-dd HH:mm:ss)", required = false)
+    @McpToolParam(
+            description = "The transaction start time is before this time (yyyy-MM-dd HH:mm:ss)",
+            required = false)
     private String timeEnd;
 
     public boolean isWithBranch() {

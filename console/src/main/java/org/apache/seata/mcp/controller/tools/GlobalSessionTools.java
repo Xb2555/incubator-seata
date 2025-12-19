@@ -61,8 +61,7 @@ public class GlobalSessionTools {
 
     @McpTool(description = "Query global transactions")
     public PageResult<GlobalSessionVO> queryGlobalSession(
-            @McpToolParam(description = "Specify the namespace of the TC node")
-            NameSpaceDetail nameSpaceDetail,
+            @McpToolParam(description = "Specify the namespace of the TC node") NameSpaceDetail nameSpaceDetail,
             @McpToolParam(description = "Query parameter objects") GlobalSessionParamDto paramDto) {
         GlobalSessionParam param = GlobalSessionParam.covertFromDtoParam(paramDto);
         if (param.getTimeStart() != null) {
@@ -97,8 +96,7 @@ public class GlobalSessionTools {
 
     @McpTool(description = "Delete the global session, Get the modify key before you delete")
     public String deleteGlobalSession(
-            @McpToolParam(description = "Specify the namespace of the TC node")
-                    NameSpaceDetail nameSpaceDetail,
+            @McpToolParam(description = "Specify the namespace of the TC node") NameSpaceDetail nameSpaceDetail,
             @McpToolParam(description = "Global transaction id") String xid,
             @McpToolParam(description = "Modify key") String modifyKey) {
         if (!modifyConfirmService.isValidKey(modifyKey)) {
@@ -117,8 +115,7 @@ public class GlobalSessionTools {
 
     @McpTool(description = "Stop the global session retry, Get the modify key before you stop")
     public String stopGlobalSession(
-            @McpToolParam(description = "Specify the namespace of the TC node")
-                    NameSpaceDetail nameSpaceDetail,
+            @McpToolParam(description = "Specify the namespace of the TC node") NameSpaceDetail nameSpaceDetail,
             @McpToolParam(description = "Global transaction id") String xid,
             @McpToolParam(description = "Modify key") String modifyKey) {
         if (!modifyConfirmService.isValidKey(modifyKey)) {
@@ -137,8 +134,7 @@ public class GlobalSessionTools {
 
     @McpTool(description = "Start the global session retry, Get the modify key before you start")
     public String startGlobalSession(
-            @McpToolParam(description = "Specify the namespace of the TC node")
-                    NameSpaceDetail nameSpaceDetail,
+            @McpToolParam(description = "Specify the namespace of the TC node") NameSpaceDetail nameSpaceDetail,
             @McpToolParam(description = "Global transaction id") String xid,
             @McpToolParam(description = "Modify key") String modifyKey) {
         if (!modifyConfirmService.isValidKey(modifyKey)) {
@@ -157,8 +153,7 @@ public class GlobalSessionTools {
 
     @McpTool(description = "Send global session to commit or rollback to rm, Get the modify key before you send")
     public String sendCommitOrRollback(
-            @McpToolParam(description = "Specify the namespace of the TC node")
-                    NameSpaceDetail nameSpaceDetail,
+            @McpToolParam(description = "Specify the namespace of the TC node") NameSpaceDetail nameSpaceDetail,
             @McpToolParam(description = "Global transaction id") String xid,
             @McpToolParam(description = "Modify key") String modifyKey) {
         if (!modifyConfirmService.isValidKey(modifyKey)) {
@@ -179,8 +174,7 @@ public class GlobalSessionTools {
             description =
                     "Change the global session status, Used to change transactions that are in a failed commit or rollback failed state to a retry state, Get the modify key before you change")
     public String changeGlobalStatus(
-            @McpToolParam(description = "Specify the namespace of the TC node")
-                    NameSpaceDetail nameSpaceDetail,
+            @McpToolParam(description = "Specify the namespace of the TC node") NameSpaceDetail nameSpaceDetail,
             @McpToolParam(description = "Global transaction id") String xid,
             @McpToolParam(description = "Modify key") String modifyKey) {
         if (!modifyConfirmService.isValidKey(modifyKey)) {
@@ -199,8 +193,7 @@ public class GlobalSessionTools {
 
     @McpTool(description = "Check out the abnormal transaction information,You can specify the time")
     public List<GlobalSessionVO> getAbnormalSessions(
-            @McpToolParam(description = "Specify the namespace of the TC node")
-                    NameSpaceDetail nameSpaceDetail,
+            @McpToolParam(description = "Specify the namespace of the TC node") NameSpaceDetail nameSpaceDetail,
             @McpToolParam(description = "Query Param") GlobalAbnormalSessionParam abnormalSessionParam) {
         List<GlobalSessionVO> result = new ArrayList<>();
         GlobalSessionParamDto param = GlobalSessionParamDto.covertFromAbnormalParam(abnormalSessionParam);
